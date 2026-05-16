@@ -138,6 +138,20 @@ api_collection.json
 
 It contains the two local API requests used to verify the backend responses.
 
+## Tests
+
+Both runnable backend modules include Node built-in tests for their core logic.
+
+```powershell
+cd vehicle_maintenance_scheduler
+npm test
+```
+
+```powershell
+cd notification_app_be
+npm test
+```
+
 ## Notes
 
 - Algorithms are implemented without external algorithm libraries.
