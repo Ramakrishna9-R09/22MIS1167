@@ -1,5 +1,7 @@
 'use strict';
 
+const { safeLog } = require('../logging_middleware/logger');
+
 const API_BASE_URL = 'http://4.224.186.213/evaluation-service';
 
 function buildAuthorizationHeader() {
@@ -17,6 +19,8 @@ function buildAuthorizationHeader() {
 }
 
 async function fetchEvaluationResource(resourcePath) {
+  await safeLog('backend', 'info', 'service', `Fetching evaluation resource ${resourcePath}.`);
+
   const response = await fetch(`${API_BASE_URL}${resourcePath}`, {
     method: 'GET',
     headers: {

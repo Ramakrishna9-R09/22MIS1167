@@ -1,21 +1,23 @@
 'use strict';
 
-const http = require('http');
-const { URL } = require('url');
+const express = require('express');
 const { fetchDepots, fetchVehicles } = require('./fetchData');
 const { scheduleDepotMaintenance } = require('./scheduler');
 const { safeLog } = require('../logging_middleware/logger');
 
 const PORT = Number(process.env.PORT || 3001);
+const app = express();
 
-function sendJson(response, statusCode, payload) {
-  response.writeHead(statusCode, {
-    'Content-Type': 'application/json'
+app.use(express.json({ limit: '64kb' }));
+
+app.get('/health', (request, response) => {
+  response.status(200).json({
+    status: 'ok',
+    service: 'vehicle-maintenance-scheduler'
   });
-  response.end(JSON.stringify(payload, null, 2));
-}
+});
 
-async function handleScheduleRequest(response) {
+app.get('/api/v1/maintenance-schedules', async (request, response) => {
   const requestStartedAt = Date.now();
 
   try {
@@ -36,7 +38,7 @@ async function handleScheduleRequest(response) {
 
     await safeLog('backend', 'info', 'service', `Generated schedules for ${schedules.length} depots.`);
 
-    sendJson(response, 200, {
+    response.status(200).json({
       data: schedules,
       meta: {
         depotCount: schedules.length,
@@ -47,7 +49,7 @@ async function handleScheduleRequest(response) {
   } catch (error) {
     await safeLog('backend', 'error', 'handler', `Maintenance schedule request failed: ${error.message}`);
 
-    sendJson(response, 500, {
+    response.status(500).json({
       error: {
         code: 'MAINTENANCE_SCHEDULE_FAILED',
         message: error.message
@@ -57,25 +59,10 @@ async function handleScheduleRequest(response) {
       }
     });
   }
-}
+});
 
-const server = http.createServer(async (request, response) => {
-  const requestUrl = new URL(request.url, `http://${request.headers.host}`);
-
-  if (request.method === 'GET' && requestUrl.pathname === '/health') {
-    sendJson(response, 200, {
-      status: 'ok',
-      service: 'vehicle-maintenance-scheduler'
-    });
-    return;
-  }
-
-  if (request.method === 'GET' && requestUrl.pathname === '/api/v1/maintenance-schedules') {
-    await handleScheduleRequest(response);
-    return;
-  }
-
-  sendJson(response, 404, {
+app.use((request, response) => {
+  response.status(404).json({
     error: {
       code: 'ROUTE_NOT_FOUND',
       message: 'Route not found.'
@@ -83,6 +70,6 @@ const server = http.createServer(async (request, response) => {
   });
 });
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Vehicle maintenance scheduler API listening on http://localhost:${PORT}`);
 });

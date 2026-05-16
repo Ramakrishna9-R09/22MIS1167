@@ -1,5 +1,7 @@
 'use strict';
 
+const { safeLog } = require('../logging_middleware/logger');
+
 const API_BASE_URL = 'http://4.224.186.213/evaluation-service';
 const TOP_NOTIFICATION_LIMIT = 10;
 const TYPE_WEIGHTS = {
@@ -107,6 +109,8 @@ function buildAuthorizationHeader() {
 }
 
 async function fetchNotifications() {
+  await safeLog('backend', 'info', 'service', 'Fetching notifications for priority inbox.');
+
   const response = await fetch(`${API_BASE_URL}/notifications`, {
     method: 'GET',
     headers: {
