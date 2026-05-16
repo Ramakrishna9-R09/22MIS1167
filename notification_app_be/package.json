@@ -1,0 +1,15 @@
+{
+  "name": "priority-inbox",
+  "version": "1.0.0",
+  "description": "Priority inbox ranking for campus notifications.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "cli": "node priorityInbox.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "UNLICENSED"
+}

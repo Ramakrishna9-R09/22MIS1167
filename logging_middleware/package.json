@@ -1,0 +1,14 @@
+{
+  "name": "logging-middleware",
+  "version": "1.0.0",
+  "description": "Reusable logging client for backend services.",
+  "main": "logger.js",
+  "type": "commonjs",
+  "scripts": {
+    "check": "node --check logger.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "UNLICENSED"
+}

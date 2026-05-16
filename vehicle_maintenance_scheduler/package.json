@@ -1,0 +1,15 @@
+{
+  "name": "vehicle-maintenance-scheduler",
+  "version": "1.0.0",
+  "description": "Daily vehicle maintenance scheduler using dynamic programming.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "cli": "node index.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "UNLICENSED"
+}
