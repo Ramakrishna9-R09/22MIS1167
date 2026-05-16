@@ -6,7 +6,8 @@
   "type": "commonjs",
   "scripts": {
     "start": "node server.js",
-    "cli": "node index.js"
+    "cli": "node index.js",
+    "check": "node --check server.js && node --check index.js && node --check fetchData.js && node --check scheduler.js"
   },
   "dependencies": {
     "express": "^4.19.2"

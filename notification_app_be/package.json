@@ -6,7 +6,8 @@
   "type": "commonjs",
   "scripts": {
     "start": "node server.js",
-    "cli": "node priorityInbox.js"
+    "cli": "node priorityInbox.js",
+    "check": "node --check server.js && node --check priorityInbox.js"
   },
   "dependencies": {
     "express": "^4.19.2"
