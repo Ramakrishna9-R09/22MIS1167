@@ -5,6 +5,20 @@
   },
   "item": [
     {
+      "name": "Vehicle service health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["health"]
+        }
+      }
+    },
+    {
       "name": "Vehicle maintenance schedules",
       "request": {
         "method": "GET",
@@ -15,6 +29,20 @@
           "host": ["localhost"],
           "port": "3001",
           "path": ["api", "v1", "maintenance-schedules"]
+        }
+      }
+    },
+    {
+      "name": "Notification service health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3002/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3002",
+          "path": ["health"]
         }
       }
     },
